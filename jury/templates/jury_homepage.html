@@ -1,0 +1,19 @@
+{% extends 'jury_base.html' %}
+
+{% block title%} Home{% endblock %}
+
+{% block content %}
+<div style="margin-left:5%; margin-top:30px;">
+    <ul>
+        <li ><a href="{% url 'jury_homepage' %}">Home</a></li>
+        <li ><a href="{% url 'jury_problem' %}">Problem</a></li>
+        <li ><a href="{% url 'jury_contest' %}">Contest</a></li>
+        <li ><a href="{% url 'jury_view_team' %}">Team</a></li>
+        <li ><a href="{% url 'jury_view_user' %}">User</a></li>
+        <li ><a href="{% url 'all_time_clarifications' %}">Clarification</a></li>
+        <li ><a href="{% url 'jury_scoreboard' %}">Score board</a></li>
+        <li ><a href="{% url 'submissions' %}">Submissions</a></li>
+        
+    </ul>
+</div>
+{% endblock %}

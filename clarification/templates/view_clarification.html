@@ -1,0 +1,58 @@
+{% extends 'base_site.html'%}
+{% block title%}Clarification{% endblock %}
+
+{% block content %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% if not request.session.contest_741_852_963 %} 
+<div class="container nocontest">
+    <h3>There is no active contest</h3>
+</div>
+{% else %}
+    <div class="row">
+        
+        <div class="col-md-5" style="margin-left:5%;">
+            {% if not all_clarification %}
+                <h3>There is no recent clarifications</h3>
+            {% else %}
+                {% for time, message, type in all_clarification%}
+                    {% if type == "from_user" %}
+                        <div class="col-sm-8" style="float:right;background: rgb(194, 241, 215); border-radius: 20px; margin-top: 15px; padding-top: 10px; padding-bottom: 5px;">
+                            <p>
+                                {{message}}
+                            </p>
+                            <small style="float:right;">{{time}}</small>
+                        </div>
+                    {% else %}
+                        <div class="col-sm-8"  style="float:left; background: rgb(189, 238, 166);border-radius: 20px; margin-top: 15px;  padding-top: 10px; padding-bottom: 5px;">
+                            <p>
+                                {{message}}
+                            </p>
+                            <small style="float:right;">{{time}}</small>
+                        </div>
+                    {% endif %}
+                    
+                {% endfor %}
+            {% endif %}
+    
+        </div>
+
+
+        <div class="col-md-4" style="margin-left: 10%;">
+            
+            <h3>send clarification </h3><br>
+
+            <form enctype="multipart/form-data" method="post" novalidate>
+                {% csrf_token %}
+                {% include 'horizontal_form.html' %}
+
+                <button type="submit" class = "btn btn-primary" name="send"> send</button>
+            </form>
+            
+        </div>
+    </div>
+{% endif %}
+{% endblock %}
+
+   

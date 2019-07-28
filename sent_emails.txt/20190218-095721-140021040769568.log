@@ -1,0 +1,22 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Subject: Andalus password reset
+From: webmaster@localhost
+To: mustefa@gmail.com
+Date: Mon, 18 Feb 2019 06:57:21 -0000
+Message-ID: <155047304104.6144.10745605670471857179@andalus>
+
+
+To initiate the password reset process for your mustefa TestSite Account,
+click the link below:
+
+http://127.0.0.1:8000/reset/Mg/53y-89f97d14676f0d5b7494/
+
+If clicking the link above doesn't work, please copy and paste the URL in a new browser
+window instead.
+
+Sincerely,
+The TestSite Team
+
+-------------------------------------------------------------------------------

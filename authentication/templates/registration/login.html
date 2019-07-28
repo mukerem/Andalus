@@ -1,0 +1,63 @@
+{% extends 'base_site.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% load widget_tweaks %}
+{% block content%}
+
+<div class="content">
+    <div class="container">
+            <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header"> <h3><strong>Login page</strong></h3> </div>
+                    <div class="card-body">
+                        <form method="POST" action="{% url 'login' %}">
+                            {% csrf_token %}
+                            {% for field in form.visible_fields %}
+                                <div class="form-group row">
+                                    <label for="username" class="col-sm-4 col-form-label text-md-right">
+                                     {{ field.label_tag }}
+                                 </label>
+
+                                    <div class="col-md-6">
+                                    {% if form.is_bound %}
+                                        {% if field.errors %}
+                                            {% render_field field class="form-control is-invalid" %}
+                                            {% for  error in field.errors %}
+                                                <div class="invalid-feedback">
+                                                    {{ error }}
+                                                </div>
+                                            {% endfor %}
+                
+                                        {% else %}
+                                            {% render_field field class="form-control is-valid" %}
+                                        {% endif %}
+                                    {% else %}
+                                        {% render_field field class="form-control" %}
+                                    {% endif %}
+                                    </div>
+                                            
+                                    {% if field.help_text %}
+                                        <small class="form-text text-muted">{{ field.help_text }}</small>
+                                    {% endif %}
+                    
+                                </div>
+                            {% endfor %}
+
+                            <div class="form-group row mb-0">
+                                <div class="col-4"></div>
+                                <div class="col-md-6">
+                                    <button type="submit" class="btn btn-primary"> Login </button>
+                                </div>
+                                <div class="col-6"></div>
+                                <a class="forgot" href="{% url 'password_reset' %}"> Forgot Your Password? </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}

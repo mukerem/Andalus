@@ -1,0 +1,46 @@
+{% extends base_page %}
+{% block title%} View Team{% endblock %}
+
+{% block content %}  
+    {% load static %} 
+    
+    <div class = "container col-6" style="margin-left:10%;">
+            <br><br><br>
+            <table class="table table-light" style="width:100%;">
+              
+                <tr>
+                    <td style="width:30%;"> <strong>Team Name:</strong></td>
+                    <td style="width:70%;">{{team.username}}</td>
+                </tr>
+                {% if team.campus %}
+                <tr>
+                    <td style="width:30%;"> <strong>Campus:</strong></td>
+                    <td style="width:70%;">{{team.campus}}</td>
+                </tr>
+                {% endif %}
+                <tr>
+                    <td style="width:30%;"> <strong>Score:</strong></td>
+                    <td style="width:70%;">{{team.score}}</td>
+                </tr>
+                <tr>
+                    <td style="width:30%;"> <strong>Register date:</strong></td>
+                    <td style="width:70%;">{{team.register_date}}</td>
+                </tr>
+                {% if team.member.all %}
+                    <tr style="background:rgb(161, 228, 224);">
+                        <td style="width:30%;"> <strong>Members:</strong></td>
+                        <td style="width:70%;">
+                            <table  style="width:100%;">
+                                {% for i in team.member.all %}
+                                    <tr><td>{{i.first_name}} {{i.last_name}}</td></tr>
+                                {% endfor %}
+                            </table>
+                        </td>
+                    </tr>
+                    
+                {% endif%}
+            </table>
+            
+        <br><br><br>
+    </div>
+{% endblock %}

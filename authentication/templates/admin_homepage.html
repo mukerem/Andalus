@@ -1,0 +1,22 @@
+{% extends 'admin_base_site.html'%}
+
+{% block title%} Home{% endblock %}
+
+{% block content %}
+<div style="margin-left: 5%; margin-top:40px;">
+    <ul >
+        <li ><a href="{% url 'admin_index' %}">MyICPC</a></li>
+        <li ><a href="{% url 'problem' %}">Problem</a></li>
+        <li ><a href="{% url 'contest' %}">Contest</a></li>
+        <li ><a href="{% url 'team' %}">Team</a></li>
+        <li ><a href="{% url 'user' %}">User</a></li>
+        <li ><a href="{% url 'rejudge' %}">Rejudge</a></li>
+        <li ><a href="{% url 'rescore' %}">Rescore</a></li>
+        <li ><a href="{% url 'admin_clarification' %}">Clarification</a></li>
+        <li ><a href="{% url 'jury_scoreboard' %}">Score board</a></li>
+        <li ><a href="{% url 'submissions' %}">Submissions</a></li>
+        <li> <a href="{% url 'rating' %}"> Rating</a> </li>
+    </ul>
+        
+</div>
+{% endblock %}

@@ -1,0 +1,107 @@
+{% extends 'jury_base.html'%}
+{% block title%}Detail Teams{% endblock %}
+
+{% load static %}
+{% block content %}
+    
+<br><br>
+<div class="row">
+    <div class="col-md-6" style="margin-left:5%;">
+     
+        {% if not total_teams%}
+            <div class="col-sm-8" style="margin-left:5%;">
+                <h3>There is no team</h3>
+            </div>
+        {% else %}
+            <table class="table table-striped" >
+                <thead class="table-info">
+                    <tr>
+                        <th ><strong>TID</strong></th>
+                        <th ><strong>name</strong></th>
+                        <th ><strong>campus</strong></th>
+                        <th ><strong>detail</strong></th>
+                    
+                    </tr>
+                </thead>
+                {% for i in total_teams %}
+               
+                    {% if i.id == this_team.id %}
+                        <tr style="background: rgb(147, 255, 250);">
+                            <td >{{i.id}}</td>
+                            <td >{{i.username}}</td>
+                            {% if i.campus %}
+                                <td >{{i.campus}}</td>
+                            {% else %}
+                                <td >-</td>
+                            {% endif %}
+                            <td  >
+                                <a href="{% url 'jury_team_detail' i.id %}" style="margin-left:20px;" title="view detail"> <img src="{% static 'Images/icons/view_detail.png' %}" height="20" width="20"></a>
+                            </td>
+                         
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td >{{i.id}}</td>
+                            <td >{{i.username}}</td>
+                            {% if i.campus %}
+                                <td >{{i.campus}}</td>
+                            {% else %}
+                                <td >-</td>
+                            {% endif %}
+                            <td  >
+                                <a href="{% url 'jury_team_detail' i.id %}" style="margin-left:20px;" title="view detail"> <img src="{% static 'Images/icons/view_detail.png' %}" height="20" width="20"></a>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+        {% endif %}
+        
+    </div>
+
+
+    <div class = "container col-4" style="margin-left:5%;">
+            <h4>Detail Team: {{this_team.username}}</h4><br>
+            <table class="table table-light" style="width:100%;">
+                <tr>
+                    <td style="width:30%;"> <strong>ID:</strong></td>
+                    <td style="width:70%;">{{this_team.id}}</td>
+                </tr>
+                <tr>
+                    <td style="width:30%;"> <strong>Team Name:</strong></td>
+                    <td style="width:70%;">{{this_team.username}}</td>
+                </tr>
+                {% if this_team.campus %}
+                <tr>
+                    <td style="width:30%;"> <strong>Campus:</strong></td>
+                    <td style="width:70%;">{{this_team.campus}}</td>
+                </tr>
+                {% endif %}
+                <tr>
+                    <td style="width:30%;"> <strong>Score:</strong></td>
+                    <td style="width:70%;">{{this_team.score}}</td>
+                </tr>
+                <tr>
+                    <td style="width:30%;"> <strong>Register date:</strong></td>
+                    <td style="width:70%;">{{this_team.register_date}}</td>
+                </tr>
+                {% if this_team.member.all %}
+                    <tr style="background:rgb(161, 228, 224);">
+                        <td style="width:30%;"> <strong>Members:</strong></td>
+                        <td style="width:70%;">
+                            <table  style="width:100%;">
+                                {% for i in this_team.member.all %}
+                                    <tr><td>{{i.first_name}} {{i.last_name}}</td></tr>
+                                {% endfor %}
+                            </table>
+                        </td>
+                    </tr>
+                    
+                {% endif%}
+            </table>'
+            
+    </div>
+</div>
+{% endblock %}
+
+   

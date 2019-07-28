@@ -1,0 +1,18 @@
+{% extends 'base_site.html' %}
+{% block title%} Sign Up{% endblock %}
+
+{% block content %}  
+    {% load static %} 
+    {% load widget_tweaks %}
+
+    
+    <div class = "container col-6" style="margin-left:10%;">
+        <br><br><br>
+        <form  enctype="multipart/form-data" method="post" novalidate>
+            {% csrf_token %}
+            {% include 'horizontal_form.html' %}
+            <button type="submit" class = "btn btn-primary">register</button>
+        </form>
+        <br><br><br>
+    </div>
+{% endblock %}

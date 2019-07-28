@@ -1,0 +1,17 @@
+{% if request.session.all_active_contests_741_963_852 %}
+                            
+    <select id="id_contest" name="contest" style="width:100px; margin-right:2%;font-size:12px;">
+        {% for id, title in request.session.all_active_contests_741_963_852 %}
+            {% if id|slugify ==  request.session.contest_741_852_963 %}
+                <option   value="{{id}}" selected="selected" >
+                    <p>{{title}}</p>
+                </option>
+            {% else %}
+                <option   value="{{id}}">
+                        <p>{{title}}</p>
+                    </option>
+            {%endif%}
+            
+        {%endfor%}
+    </select>
+{%endif%}

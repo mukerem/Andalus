@@ -1,0 +1,25 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Subject: Password reset on 127.0.0.1:8000
+From: webmaster@localhost
+To: mustefa@gmail.com
+Date: Tue, 08 Jan 2019 13:39:54 -0000
+Message-ID: <154695479421.4463.4341481632105930528@andalus>
+
+
+You're receiving this email because you requested a password reset for your user account at 127.0.0.1:8000.
+
+Please go to the following page and choose a new password:
+
+http://127.0.0.1:8000/reset/Mw/52t-641f9f67de58a7d963eb/
+
+Your username, in case you've forgotten: mustefa
+
+Thanks for using our site!
+
+The 127.0.0.1:8000 team
+
+
+
+-------------------------------------------------------------------------------

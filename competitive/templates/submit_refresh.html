@@ -1,0 +1,105 @@
+{% load widget_tweaks %}
+{% if not my_scoreboard %} 
+    <h3>There is no active contest</h3>
+
+{% else %}
+    <div style="margin-left:10%;">
+        <table border="1" >
+            <thead>
+                <tr>
+                    <th style="width: 100px; padding: 15px;"><strong>Score</strong></th>
+                    <th style="width: 100px;"><strong>Time</strong></th>
+                    {% for i in problem_list%}
+                    <th style="width:80px;"><strong>{{i.short_name}}</strong> </th>
+                    {%endfor%}
+                </tr>
+            </thead>
+
+            <tr>
+                {% for row, color in my_scoreboard %}
+                    <td style="border-color:gray;padding: 10px;width:30px; " bgcolor = {{color}}>
+                            {{row}}
+                    </td>
+                {% endfor %}
+            </tr>
+        </table>
+    </div>
+    <br><br>
+    <div class="col-sm-10">
+        <form enctype="multipart/form-data" method="post" novalidate>
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+                <table class="error">
+                    {% for error in form.non_field_errors%}
+                    <tr><td><b> {{ error}}</b></td></tr>
+                    {% endfor %}
+                </table>
+                <br>
+            {% endif %}
+            <table style="width:100%;">
+                <tr>
+                    {% for field in form.visible_fields %}
+                        <td><strong>{{ field.label_tag }}</strong>
+                    {% endfor %}
+                </tr>
+
+                <tr>
+                    {% for field in form.visible_fields %}
+                        <td>
+                            {% if form.is_bound %}
+                                {% if field.errors %}
+                                    {% render_field field class="form-control is-invalid" %}
+                                    {% for  error in field.errors %}
+                                        <div class="invalid-feedback">
+                                            {{ error }}
+                                        </div>
+                                    {% endfor %}
+
+                                {% else %}
+                                    {% render_field field class="form-control is-valid" %}
+                                {% endif %}
+                            {% else %}
+                                {% render_field field class="form-control" %}
+                            {% endif %}
+                                            
+
+                            {% if field.help_text %}
+                                <small class="form-text text-muted">{{ field.help_text }}</small>
+                            {% endif %}
+                        </td>
+                    
+                    {% endfor %}
+                    <td><button type="submit" class = "btn btn-primary" style="margin-left:15%;">submit</button></td>
+
+                </tr>
+            </table>
+        </form> 
+    </div>
+    <br><br>
+    {% if all_current_contest_submits %}
+        <div class="col-sm-9">
+            <table  width="100%">
+                <thead>
+                <th style="width:30%;">time</th>
+                <th style="width:25%;">problem</th>
+                <th style="width:15%;">language</th>
+                <th style="width:30%;">result</th>
+                </thead>
+                {% for i in all_current_contest_submits %}
+                    <tr>
+                        <td style="width:30%;" >{{i.submit_time}}</td>
+                        <td style="width:25%;">{{i.problem.title}}</td>
+                        <td style="width:15%;">{{i.language}}</td>
+                        {%if i.result == 'Correct'%}
+                            <td style="width: 30%;color:green;">{{i.result}}</td>
+                        {%elif i.result == 'Too Late'%}
+                            <td style="width: 30%;color:gray;">{{i.result}}</td>
+                        {%else%}
+                            <td style="width: 30%;color:red;">{{i.result}}</td>
+                        {%endif%}
+                    </tr>
+                {%endfor%}
+            </table>
+        </div>
+    {% endif %}
+{% endif %}

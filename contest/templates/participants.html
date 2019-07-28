@@ -1,0 +1,24 @@
+{% extends 'admin_base_site.html'%}
+{% block title%}Participants{% endblock %}
+
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+
+
+<link rel="stylesheet" href="{% static 'files/style5.css' %}"  type="text/css" > 
+<script  src="{% static 'files/jsi18n.js' %}"> </script>   
+
+<div class="container col-8">
+    <br>
+    {{form.media}}
+    <h3>Participants for contest {{title}}</h3><br>
+    <form enctype="multipart/form-data" method="post" novalidate>
+        {% csrf_token %}
+        {% include 'horizontal_form.html' %}
+
+        <button type="submit" class = "btn btn-primary" name="row-data"> save</button>
+        <a class="btn btn-secondary" href="{% url 'edit_contest' this_contest_id%}" style="margin-left:70%;">back</a>
+
+</div>
+{% endblock %}

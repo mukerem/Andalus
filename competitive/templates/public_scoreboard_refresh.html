@@ -1,0 +1,439 @@
+{% load static %}
+
+{% if not request.session.public_contest_741_852_963 %}
+    <div class="container nocontest">
+        <h3>There is no active contest</h3>
+    </div>
+{% else %}
+    {% if scoreboard %}
+    <div class="content" id="active_contest_scoreboard">
+        <div class="contest-name">
+            Scoreboard {{ contest.title }}
+        </div>
+        <br> 
+        <div class="scoreboard">
+            <table style="border-collapse: separate; order-spacing: 0.01px;">
+                <tr >
+                    <thead>
+                        <th class="th right">RN </th>
+                        <th class="th right">TEAM</th>
+                        <th class="th right score">∑</th>
+                        <th class="th right score">PEN</th>
+                        {% for i in total_problems%}
+                            <th class="th score">
+                                <a href=""> {{i.short_name}} <span style="height: 15px; width: 15px; background-color: {{i.ballon}}; 
+                                 border-radius: 50%; display: inline-block;"></span> </a> </th>
+                        {%endfor%}
+                    
+                    </thead>
+                </tr>
+                {% if scoreboard.team_scoreboard %}
+                {% for row in scoreboard.team_scoreboard %}
+               
+                <tr>
+                    <tbody>
+                        <td class="td right"> {{row.7}} </td>
+                        <td class="td right team" bgcolor='#ffffff'>
+                            <img src="{% static row.5 %}">
+                            <div id="teamname"> {{row.3}} </div>
+                            <div id="univname"> {{row.4}}</div>
+                        </td>
+                        <td class="td right score">{{row.0}}</td>
+                        <td class="td right score">{{row.1}}</td>
+                        {% for try, time, color in row.6 %}
+                            {% if not color == '#ffffff' %}
+                                <td class="td score" bgcolor={{ color }}>
+                                {% if not time == -1 %}
+                                    <div id="time" > {{ time }} </div>
+                                {% endif %}
+                                {% if try == 1 %}
+                                    <div id="try"> {{ try }} try </div> </td>
+                                {% elif not try == 0 %}
+                                    <div id="try"> {{ try }} tries </div> </td>
+                                {% endif %}
+                            {% else %}
+                            <td class="td score"> <div id="time" > </div><div id="try">  </div> </td>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </tr>
+                {% endfor %}
+                {% endif %}
+
+                {% if scoreboard.participant_scoreboard %}
+                    {% for row in scoreboard.participant_scoreboard %}
+                    <tr>
+                        <tbody>
+                            {% if forloop.first %}
+                                <td class="top td right"> {{row.7}} </td>
+                                <td class="top td right team" bgcolor='#9ff1f7'>
+                                    <img src="{% static row.5 %}">
+                                    <div id="teamname"> {{row.3}} </div>
+                                    <div id="univname"> {{row.4}}</div>
+                                </td>
+                                <td class="top td right score">{{row.0}}</td>
+                                <td class="top td right score">{{row.1}}</td>
+                                {% for try, time, color in row.6 %}
+                                    {% if not color == '#ffffff' %}
+                                        <td class="top td score" bgcolor={{ color }}>
+                                        {% if not time == -1 %}
+                                            <div id="time" > {{ time }} </div>
+                                        {% endif %}
+                                        {% if try == 1 %}
+                                            <div id="try"> {{ try }} try </div> </td>
+                                        {% elif not try == 0 %}
+                                            <div id="try"> {{ try }} tries </div> </td>
+                                        {% endif %}
+                                    {% else %}
+                                    <td class="top td score"> <div id="time" > </div><div id="try">  </div> </td>
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                <td class="td right"> {{row.7}} </td>
+                                <td class="td right team" bgcolor='#9ff1f7'>
+                                    <img src="{% static row.5 %}">
+                                    <div id="teamname"> {{row.3}} </div>
+                                    <div id="univname"> {{row.4}}</div>
+                                </td>
+                                <td class="td right score">{{row.0}}</td>
+                                <td class="td right score">{{row.1}}</td>
+                                {% for try, time, color in row.6 %}
+                                    {% if not color == '#ffffff' %}
+                                        <td class="td score" bgcolor={{ color }}>
+                                        {% if not time == -1 %}
+                                            <div id="time" > {{ time }} </div>
+                                        {% endif %}
+                                        {% if try == 1 %}
+                                            <div id="try"> {{ try }} try </div> </td>
+                                        {% elif not try == 0 %}
+                                            <div id="try"> {{ try }} tries </div> </td>
+                                        {% endif %}
+                                    {% else %}
+                                    <td class="td score"> <div id="time" > </div><div id="try">  </div> </td>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        </tbody>
+                    </tr>
+                    {% endfor %}
+                {% endif %}
+
+                {% if scoreboard.observer_scoreboard %}
+                    {% for row in scoreboard.observer_scoreboard %}
+                        <tr>
+                            <tbody>
+                                {% if forloop.first %}
+                                    <td class="top td right"> {{row.7}} </td>
+                                    <td class="top td right team" bgcolor='#e3f035'>
+                                        <img src="{% static row.5 %}">
+                                        <div id="teamname"> {{row.3}} </div>
+                                        <div id="univname"> {{row.4}}</div>
+                                    </td>
+                                    <td class="top td right score">{{row.0}}</td>
+                                    <td class="top td right score">{{row.1}}</td>
+                                    {% for try, time, color  in row.6 %}
+                                        {% if not color == '#ffffff' %}
+                                            <td class="top td score" bgcolor={{ color }} >
+                                            {% if not time == -1 %}
+                                                <div id="time" > {{ time }} </div>
+                                            {% endif %}
+                                            {% if try == 1 %}
+                                                <div id="try"> {{ try }} try </div> </td>
+                                            {% elif not try == 0 %}
+                                                <div id="try"> {{ try }} tries </div> </td>
+                                            {% endif %}
+                                        {% else %}
+                                        <td class="top td score"> <div id="time" > </div><div id="try">  </div> </td>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                    <td class="td right"> {{row.7}} </td>
+                                    <td class="td right team" bgcolor='#e3f035'>
+                                        <img src="{% static row.5 %}">
+                                        <div id="teamname"> {{row.3}} </div>
+                                        <div id="univname"> {{row.4}}</div>
+                                    </td>
+                                    <td class="td right score">{{row.0}}</td>
+                                    <td class="td right score">{{row.1}}</td>
+                                    {% for try, time, color  in row.6 %}
+                                        {% if not color == '#ffffff' %}
+                                            <td class="td score" bgcolor={{ color }} >
+                                            {% if not time == -1 %}
+                                                <div id="time" > {{ time }} </div>
+                                            {% endif %}
+                                            {% if try == 1 %}
+                                                <div id="try"> {{ try }} try </div> </td>
+                                            {% elif not try == 0 %}
+                                                <div id="try"> {{ try }} tries </div> </td>
+                                            {% endif %}
+                                        {% else %}
+                                        <td class="td score"> <div id="time" > </div><div id="try">  </div> </td>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            </tbody>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+
+                {% if scoreboard.self_registered_scoreboard %}
+                    {% for row in scoreboard.self_registered_scoreboard %}
+                        <tr>
+                            <tbody>
+                                {% if forloop.first %}
+                                    <td class="top td right"> {{row.7}} </td>
+                                    <td class="top td right team" bgcolor='#0feb51'>
+                                        <img src="{% static row.5 %}">
+                                        <div id="teamname"> {{row.3}} </div>
+                                        <div id="univname"> {{row.4}}</div>
+                                    </td>
+                                    <td class="top td right score">{{row.0}}</td>
+                                    <td class="top td right score">{{row.1}}</td>
+                                    {% for try, time, color in row.6 %}
+                                        {% if not color == '#ffffff' %}
+                                            <td class="top td score" bgcolor={{ color }}>
+                                            {% if not time == -1 %}
+                                                <div id="time" > {{ time }} </div>
+                                            {% endif %}
+                                            {% if try == 1 %}
+                                                <div id="try"> {{ try }} try </div> </td>
+                                            {% elif not try == 0 %}
+                                                <div id="try"> {{ try }} tries </div> </td>
+                                            {% endif %}
+                                        {% else %}
+                                        <td class="top td score"> <div id="time" > </div><div id="try">  </div> </td>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                    <td class="td right"> {{row.7}} </td>
+                                    <td class="td right team" bgcolor='#0feb51'>
+                                        <img src="{% static row.5 %}">
+                                        <div id="teamname"> {{row.3}} </div>
+                                        <div id="univname"> {{row.4}}</div>
+                                    </td>
+                                    <td class="td right score">{{row.0}}</td>
+                                    <td class="td right score">{{row.1}}</td>
+                                    {% for try, time, color in row.6 %}
+                                        {% if not color == '#ffffff' %}
+                                            <td class="td score" bgcolor={{ color }}>
+                                            {% if not time == -1 %}
+                                                <div id="time" > {{ time }} </div>
+                                            {% endif %}
+                                            {% if try == 1 %}
+                                                <div id="try"> {{ try }} try </div> </td>
+                                            {% elif not try == 0 %}
+                                                <div id="try"> {{ try }} tries </div> </td>
+                                            {% endif %}
+                                        {% else %}
+                                        <td class="td score"> <div id="time" > </div><div id="try">  </div> </td>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            </tbody>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+
+                {% if scoreboard.system_scoreboard %}
+                    {% for row in scoreboard.system_scoreboard %}
+                        <tr>
+                            <tbody>
+                                {% if forloop.first %}
+                                    <td class="top td right"> {{row.7}} </td>
+                                    <td class="top td right team" bgcolor='#9c17e9'>
+                                        <img src="{% static row.5 %}">
+                                        <div id="teamname"> {{row.3}} </div>
+                                        <div id="univname"> {{row.4}}</div>
+                                    </td>
+                                    <td class="top td right score">{{row.0}}</td>
+                                    <td class="top td right score">{{row.1}}</td>
+                                    {% for try, time, color in row.6 %}
+                                        {% if not color == '#ffffff' %}
+                                            <td class="top td score" bgcolor={{ color }}>
+                                            {% if not time == -1 %}
+                                                <div id="time" > {{ time }} </div>
+                                            {% endif %}
+                                            {% if try == 1 %}
+                                                <div id="try"> {{ try }} try </div> </td>
+                                            {% elif not try == 0 %}
+                                                <div id="try"> {{ try }} tries </div> </td>
+                                            {% endif %}
+                                        {% else %}
+                                        <td class="top td score"> <div id="time" > </div><div id="try">  </div> </td>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                    <td class="td right"> {{row.7}} </td>
+                                    <td class="td right team" bgcolor='#9c17e9'>
+                                        <img src="{% static row.5 %}">
+                                        <div id="teamname"> {{row.3}} </div>
+                                        <div id="univname"> {{row.4}}</div>
+                                    </td>
+                                    <td class="td right score">{{row.0}}</td>
+                                    <td class="td right score">{{row.1}}</td>
+                                    {% for try, time, color in row.6 %}
+                                        {% if not color == '#ffffff' %}
+                                            <td class="td score" bgcolor={{ color }}>
+                                            {% if not time == -1 %}
+                                                <div id="time" > {{ time }} </div>
+                                            {% endif %}
+                                            {% if try == 1 %}
+                                                <div id="try"> {{ try }} try </div> </td>
+                                            {% elif not try == 0 %}
+                                                <div id="try"> {{ try }} tries </div> </td>
+                                            {% endif %}
+                                        {% else %}
+                                        <td class="td score"> <div id="time" > </div><div id="try">  </div> </td>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            </tbody>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+
+                {% if scoreboard.organization_scoreboard %}
+                    {% for row in scoreboard.organization_scoreboard %}
+                        <tr>
+                            <tbody>
+                                {% if forloop.first %}
+                                    <td class="top td right"> {{row.7}} </td>
+                                    <td class="top td right team" bgcolor='#387bf7'>
+                                        <img src="{% static row.5 %}">
+                                        <div id="teamname"> {{row.3}} </div>
+                                        <div id="univname"> {{row.4}}</div>
+                                    </td>
+                                    <td class="top td right score">{{row.0}}</td>
+                                    <td class="top td right score">{{row.1}}</td>
+                                    {% for try, time, color in row.6 %}
+                                        {% if not color == '#ffffff' %}
+                                            <td class="top td score" bgcolor={{ color }}>
+                                            {% if not time == -1 %}
+                                                <div id="time" > {{ time }} </div>
+                                            {% endif %}
+                                            {% if try == 1 %}
+                                                <div id="try"> {{ try }} try </div> </td>
+                                            {% elif not try == 0 %}
+                                                <div id="try"> {{ try }} tries </div> </td>
+                                            {% endif %}
+                                        {% else %}
+                                        <td class="top td score"> <div id="time" > </div><div id="try">  </div> </td>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                    <td class="td right"> {{row.7}} </td>
+                                    <td class="td right team" bgcolor='#387bf7'>
+                                        <img src="{% static row.5 %}">
+                                        <div id="teamname"> {{row.3}} </div>
+                                        <div id="univname"> {{row.4}}</div>
+                                    </td>
+                                    <td class="td right score">{{row.0}}</td>
+                                    <td class="td right score">{{row.1}}</td>
+                                    {% for try, time, color in row.6 %}
+                                        {% if not color == '#ffffff' %}
+                                            <td class="td score" bgcolor={{ color }}>
+                                            {% if not time == -1 %}
+                                                <div id="time" > {{ time }} </div>
+                                            {% endif %}
+                                            {% if try == 1 %}
+                                                <div id="try"> {{ try }} try </div> </td>
+                                            {% elif not try == 0 %}
+                                                <div id="try"> {{ try }} tries </div> </td>
+                                            {% endif %}
+                                        {% else %}
+                                        <td class="td score"> <div id="time" > </div><div id="try">  </div> </td>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            </tbody>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+                <tr>
+                    {% for row in scoreboard.summary %}
+                        <td style="height:40px; padding: 10px;"> <strong>{{row}}</strong> </td>
+                    {% endfor %}
+                </tr>
+            </table> 
+            <br><br><br>
+            <div class="row">
+                <div class="container col-2" style="margin-left:5%;">
+                    <table>
+                        <tr>
+                            <td style="background-color:#ffffff;height:40px; width:200px;font-size:20px;  "> <strong>Categories</strong></td>
+                        </tr>
+                        <tr>
+                            <td style="background-color:#ffffff;height:40px; width:200px;font-size:20px;  "> 
+                                Teams
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="background-color:#9ff1f7 ;height:40px; width:200px;font-size:20px; "> 
+                                Participants
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="background-color:#e3f035 ;height:40px; width:200px;font-size:20px;"> 
+                                Observers
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="background-color:#0feb51;height:40px; width:200px;font-size:20px; float: center;"> 
+                                Self-Registered
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="background-color:#9c17e9;height:40px; width:200px;font-size:20px; float: center;"> 
+                                Systems
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="background-color:#387bf7;height:40px; width:200px;font-size:20px; float: center;"> 
+                                Organization
+                            </td>
+                        </tr>
+                        
+                    </table>
+                </div>
+    
+                <div class="container col-9" >
+                    <table >
+                        <tr style="height:40px;font-size:20px;">
+                            <td> <strong>Cell colours</strong></td>
+                        </tr>
+                        <tr>
+                            <td style="background-color:#26ac0c; height:40px; width:200px;font-size:20px; "> 
+                                Solved first
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="background-color:#2ef507; height:40px;font-size:20px; "> 
+                                Solved
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="background-color:#cd5c5c ; height:40px;font-size:20px;"> 
+                                Tried, incorrect
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="background-color:#ffffff;height:40px;font-size:20px; float: center;"> 
+                                Untried
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="background-color:#00ffff;height:40px;font-size:20px; float: center;"> 
+                                Frozen
+                            </td>
+                        </tr>
+    
+                    </table>
+                </div>
+    
+            
+            </div>
+        </div>  
+    </div>
+
+    {% endif %}
+{% endif %}

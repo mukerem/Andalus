@@ -1,0 +1,92 @@
+{% extends base_page %}
+
+{% block title%} Secific Submissions {% endblock %}
+{% block content %}
+{% load static %}
+
+<br><br>
+
+    {% if not submit%}
+        <div class="col-sm-8" style="margin-left:10%;">
+            <h3>There is no submissions</h3>
+        </div>
+    {% else %}
+    <div class="row">
+        <div class="col-md-4" style="margin-left:5%;">
+            <table style="font-size:15px; width:100%;" class="table">
+                
+                {% if submit.0.team %}
+                <tr>
+                    <td style="width:30%;"> <strong>Username: </strong></td>
+                    <td style="width:70%;"> {{submit.0.team.username}} </td>
+                </tr>
+                {% else %}
+                    <tr>
+                        <td style="width:30%;"> <strong>Username: </strong></td>
+                        <td style="width:70%;"> {{submit.0.user.username}} </td>
+                    </tr>
+                {% endif %}
+                
+                <tr>
+                    <td style="width:30%;"> <strong>Category: </strong></td>
+                    <td style="width:70%;"> {{category}} </td>
+                </tr>
+                <tr>
+                    <td style="width:30%;"> <strong>Contest: </strong></td>
+                    <td style="width:70%;"> {{submit.0.contest.title}} </td>
+                </tr>
+                <tr>
+                    <td style="width:30%;"> <strong>Problem: </strong></td>
+                    <td style="width:70%;"> {{submit.0.problem.title}} </td>
+                </tr>
+                
+            </table>
+
+            {% if base_page == "admin_base.html" %}
+                {% if submit.0.team %}
+                    <a class="btn btn-secondary" href="{% url 'multi_rejudge' submit.0.problem.id submit.0.team.id 'team' %}" style="margin-top:30px;margin-bottom:30px; width: 200px;">all rejudge</a>
+                {% else %}
+                    <a class="btn btn-secondary" href="{% url 'multi_rejudge' submit.0.problem.id submit.0.user.id 'user' %}" style="margin-top:30px;margin-bottom:30px; width: 200px;">all rejudge</a>
+                {% endif %}
+            {% endif %}
+        </div>
+        <br><br>
+        <div class="col-md-6" style="margin-left:5%;" id="submission_view">
+
+            <table class="table table-light" >
+                <thead>
+                <tr>
+                    <th style="width: 10%;"><strong>SID</strong></th>
+                    <th style="width: 30%;"><strong>time</strong></th>
+                    <td style="width: 25%;"><strong>language</strong></td>
+                    <td style="width: 25%;"><strong>result</strong></td>
+                    <td style="width: 10%;"><strong>detail</strong></td>
+                </tr>
+                </thead>
+                {% for i in submit %}
+
+
+                        <tr>
+                            <td style="width: 10%;">{{i.id}}</td>
+                            <td style="width: 30%;">{{i.submit_time}}</td>
+                            <td style="width: 25%;">{{i.language}}</td>
+                            {%if i.result == 'Correct'%}
+                                <td style="width: 25%;color:green;">{{i.result}}</td>
+                            {%else%}
+                                <td style="width: 25%;color:red;">{{i.result}}</td>
+                            {%endif%}
+                            <td style="width: 10%;" >
+                                <a href="{% url 'submission_detail' i.id %}" title="detail"> <img src="{% static 'Images/icons/view_detail.png' %}" height="20" width="20"></a>
+                            </td>
+                        </tr>
+
+
+
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    {% endif %}
+    
+    
+{% endblock %}

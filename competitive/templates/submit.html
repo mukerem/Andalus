@@ -1,0 +1,174 @@
+{% extends 'base_site.html'%}
+{% block title%} Submit{% endblock %}
+{% block content %}
+{% load widget_tweaks %}
+
+{% if not my_scoreboard %} 
+<div class="container nocontest">
+    <h3>There is no active contest</h3>
+</div>
+{% else %}
+<div id = "current_contest_submit" class="content">
+    <div class="container">
+        <div class="overview">
+            <table style="border-collapse: separate; order-spacing: 0.01px;">
+                <tr >
+                    <thead>
+                        <th class="th right">RN</th>
+                        <th class="th right score">∑</th>
+                        <th class="th right score">PEN</th>
+                        {% for i in problem_list%}
+                            <th class="th score">
+                                <a href="{{ i.pdf.url }}" title="pdf" target="_blank"> {{i.short_name}} 
+                                    <span style="height: 15px; width: 15px; background-color: {{i.ballon}}; 
+                                 border-radius: 50%; display: inline-block;"></span>
+                                </a> </th>
+                        {%endfor%}
+                    
+                    </thead>
+                </tr>
+                <tr>
+                    <tbody>
+                        <td class="td right score">?</td>
+                        <td class="td right score">{{my_scoreboard.0}}</td>
+                        <td class="td right score">{{my_scoreboard.1}}</td>
+                        {% for try, time, color  in my_scoreboard.2 %}
+                            {% if not color == '#ffffff' %}
+                                <td class="td score" bgcolor={{ color }}>
+                                {% if not time == -1 %}
+                                    <div id="time" > {{ time }} </div>
+                                 {% endif %}
+                                 {% if try == 1 %}
+                                    <div id="try"> {{ try }} try </div> </td>
+                                 {% elif not try == 0 %}
+                                    <div id="try"> {{ try }} tries </div> </td>
+                                 {% endif %}
+                            {% else %}
+                            <td class="td score"> <div id="time" > </div><div id="try">  </div> </td>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </tr>
+            </table>
+        </div> 
+    </div>
+    <div class="row" style="padding-top: 100px;">
+        <div class="col-md-5"  style="margin-left:10px;margin-top: 50px;">
+            {% if all_current_contest_submits %}
+                <div class="row">
+                    <div class="col-4">TIME</div>
+                    <div class="col-2">PROBLEM</div>
+                    <div class="col-3">LANGUAGE</div>
+                    <div class="col-3">RESULT</div>
+                </div> 
+                {% for i in all_current_contest_submits %}
+                <div class="row"> 
+                    <div class="col-4">{{i.submit_time}}</div>
+                    <div class="col-2">{{i.problem.short_name}}</div>
+                    <div class="col-3">{{i.language}}</div>
+                    {%if i.result == 'Correct'%}
+                        <div class="col-3" style="color:green;">{{i.result}}</div>
+                    {%elif i.result == 'Too Late'%}
+                        <div class="col-3" style="color:gray;">{{i.result}}</div>
+                    {%else%}
+                        <div class="col-3" style="color:red;">{{i.result}}</div>
+                    {%endif%}
+                </div>
+                {%endfor%}
+            {% endif %}
+        </div>
+
+        <div class="col-md-6"  style="margin-left:10px;">
+            <form enctype="multipart/form-data" method="post">
+                {% csrf_token %}
+                {% if form.non_field_errors %}
+                        {% for error in form.non_field_errors%}
+                            {{ error}}
+                        {% endfor %}
+                {% endif %}
+                
+                {% for field in form.visible_fields %}
+                <strong>{{ field.label_tag }}</strong>
+                    {% if form.is_bound %}
+                        {% if field.errors %}
+                            {% render_field field class=" is-invalid" %}
+                            {% for  error in field.errors %}
+                                <div class="invalid-feedback">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+
+                        {% else %}
+                            {% render_field field class=" is-valid" %}
+                        {% endif %}
+                    {% else %}
+                        {% render_field field class="" %}
+                    {% endif %}
+                                    
+
+                    {% if field.help_text %}
+                        <small class="form-text text-muted">{{ field.help_text }}</small>
+                    {% endif %}
+                {% endfor %}
+                <input type="submit" value="Submit" class="edge"> 
+            </form> 
+        </div>
+    </div>
+</div>
+  
+<script>
+        $("#id_submit_file").change(function (){
+            // $("#id_specific_code").html("");
+            var url = "{% url 'ajax_submit_process' %}";
+            var file = document.getElementById("id_submit_file").value;
+            var problem = document.getElementById("id_problem").value;
+            var language = document.getElementById("id_language").value;
+            $.ajax({
+                url: url,
+                data: {
+                    'file': file,
+                    'problem': problem,
+                    'language': language,
+                },
+                success: function (data) {
+                    
+                    var best_problem = data["best_problem"];
+                    var best_language = data["best_lang"];
+
+                    problem_list= document.getElementById("id_problem");
+                    problem_size = problem_list.length;
+                    for(var c = 0; c < problem_size ; c++){
+                        if (problem_list.options[c].value == best_problem){
+                            problem_list.options[c].selected = true;
+                            break;
+                        }
+                    }
+
+                    language_list= document.getElementById("id_language");
+                    language_size = language_list.length;
+                    for(var c = 0; c < language_size ; c++){
+                        if (language_list.options[c].value == best_language){
+                            language_list.options[c].selected = true;
+                            break;
+                        }
+                    }
+                    // console.log(data, problem_size, language_size);
+                }
+            });
+        });
+        
+        // setInterval(function(){
+        //     $.ajax({ 
+        //         url:"{% url 'active_contest_submit_refresh' %}",
+        //         // dataType='Jsontype',
+        //         success: function(data){
+        //             $('#current_contest_submit').html(data);
+        //         }
+        //     }); 
+        // }, 5000);
+
+    </script>
+
+{% endif %}    
+{% endblock %}
+

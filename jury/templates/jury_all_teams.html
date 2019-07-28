@@ -1,0 +1,51 @@
+                                
+{% extends 'jury_base.html'%}
+{% block title%}Teams{% endblock %}
+
+{% load static %}
+{% block content %}
+    
+    <br><br>
+    <div class="col-md-6" style="margin-left:5%;">
+     
+        {% if not total_teams%}
+            <div class="col-sm-8" style="margin-left:5%;">
+                <h3>There is no team</h3>
+            </div>
+        {% else %}
+        <table class="table table-striped">
+                <thead class="table-info">
+                    <tr>
+                        <th ><strong>TID</strong></th>
+                        <th ><strong>name</strong></th>
+                        <th ><strong>campus</strong></th>
+                        <th ><strong>detail</strong></th>
+                    
+                    </tr>
+                </thead>
+                {% for i in total_teams %}
+                   
+                    <tr>
+                        <td >{{i.id}}</td>
+                        <td >{{i.username}}</td>
+                        {% if i.campus %}
+                            <td >{{i.campus}}</td>
+                        {% else %}
+                            <td >-</td>
+                        {% endif %}
+                        <td  >
+                            <a href="{% url 'jury_team_detail' i.id %}" style="margin-left:20px;" title="view detail"> <img src="{% static 'Images/icons/view_detail.png' %}" height="20" width="20"></a>
+                        </td>
+                    </tr>
+                         
+                
+                {% endfor %}
+            </table>
+        {% endif %}
+        
+    </div>
+
+
+{% endblock %}
+
+   

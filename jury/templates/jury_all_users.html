@@ -1,0 +1,46 @@
+{% extends 'jury_base.html'%}
+{% block title%}Users{% endblock %}
+
+{% load static %}
+{% block content %}
+
+<br><br>
+    <div class="col-sm-6" style="margin-left:5%;">
+        {% if not total_users%}
+            <div class="col-sm-8" style="margin-left:5%;">
+                <h3>There is no user</h3>
+            </div>
+        {% else %}
+            <table class="table table-striped">
+                <thead class="table-info">
+                    <tr>
+                        <th ><strong>UID</strong></th>
+                        <th ><strong>username</strong></th>
+                        <th ><strong>name</strong></th>
+                        <th ><strong>category</strong></th>
+                        <th ><strong>detail</strong></th>
+                    
+                    </tr>
+                </thead>
+                {% for i in total_users %}
+                   
+                    <tr>
+                        <td >{{i.id}}</td>
+                        <td >{{i.username}}</td>
+                        <td >{{i.first_name}} {{i.last_name}}</td>
+                        <td >{{i.category}}</td>
+                        <td  >
+                            <a href="{% url 'jury_user_detail' i.id %}" style="margin-left:20px;" title="view detail"> <img src="{% static 'Images/icons/view_detail.png' %}" height="20" width="20"></a>
+                        </td>
+                    </tr>
+                         
+                {% endfor %}
+            </table>
+            
+        {% endif %}
+        
+    </div>
+
+{% endblock %}
+
+   

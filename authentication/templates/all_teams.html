@@ -1,0 +1,74 @@
+{% extends 'admin_base_site.html'%}
+{% block title%}Teams{% endblock %}
+
+
+{% block content %}
+{% load static %}
+
+
+
+<link rel="stylesheet" href="{% static 'files/style5.css' %}"  type="text/css" > 
+<script  src="{% static 'files/jsi18n.js' %}"> </script>   
+
+<br><br>
+<div class="row">
+    
+    <div class="col-md-6" style="margin-left:5%;">
+        
+        
+        {% if not total_teams%}
+            <div class="col-sm-8" style="margin-left:5%;">
+                <h3>There is no team</h3>
+            </div>
+        {% else %}
+        <table class="table table-striped">
+                <thead class="table-info">
+                    <tr>
+                        <th ><strong>TID</strong></th>
+                        <th ><strong>name</strong></th>
+                        <th ><strong>campus</strong></th>
+                        <th ><strong></strong></th>
+                    
+                    </tr>
+                </thead>
+                {% for i in total_teams %}
+                   
+                    <tr>
+                        <td >{{i.id}}</td>
+                        <td >{{i.username}}</td>
+                        {% if i.campus %}
+                            <td >{{i.campus}}</td>
+                        {% else %}
+                            <td >-</td>
+                        {% endif %}
+                        <td style="float: right;" >
+                            <a href="{% url 'view_team' i.id %}" title="detail" style="margin-right:20px"> <img src="{% static 'Images/icons/view_detail.png' %}" height="20" width="20"></a>
+                            <a href="{% url 'edit_team' i.id %}"  title="edit" style="margin-right:20px;"> <img src="{% static 'Images/icons/edit.png' %}" height="20" width="20"></a>
+                            <a href="{% url 'delete_team' i.id %}"  title="delete"> <img src="{% static 'Images/icons/delete.png' %}" height="20" width="20"></a>
+                        </td>
+                    </tr>
+                         
+                
+                {% endfor %}
+            </table>
+        {% endif %}
+        
+    </div>
+
+
+    <div class="col-md-4" style="margin-left: 5%;">
+        
+        <h3>add new team</h3><br>
+        {{form.media}}
+        <form enctype="multipart/form-data" method="post" novalidate>
+            {% csrf_token %}
+            {% include 'horizontal_form.html' %}
+
+            <button type="submit" class = "btn btn-primary" name="row-data"> save</button>
+        </form>
+        
+    </div>
+</div>
+{% endblock %}
+
+   

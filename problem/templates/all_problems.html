@@ -1,0 +1,101 @@
+{% extends 'admin_base_site.html'%}
+{% block title%}Problems{% endblock %}
+
+{% block content %}
+{% load static %}
+{% load widget_tweaks %}
+
+<br><br>
+<div class="row">
+    <div class=" col-md-6 col-sm-10" style="margin-left:5%; ">
+        
+        {% if not problem%}
+            <div class="col-sm-8" style="margin-left:5%;">
+                <h3>There is no problem</h3>
+            </div>
+        {% else %}
+            <table class="table table-striped" >
+                <thead class="table-info">
+                    <tr>
+                        <th ><strong>PID</strong></th>
+                        <th ><strong>title</strong></th>
+                        <th ><strong></strong></th>
+                    
+                    </tr>
+                </thead>
+                {% for i in problem %}
+                   
+                    <tr>
+                        <td >{{i.id}}</td>
+                        <td >{{i.title}}</td>
+                        <td style="float: right;" >
+                            <a href="{{i.pdf.url}}" target="_blank" style="margin-right:20px;" title="pdf"> <img src="{% static 'Images/icons/problem.png' %}" height="20" width="20"></a>
+                            <a href="{% url 'edit_problem' i.id %}" style="margin-right:20px;" title="edit"> <img src="{% static 'Images/icons/edit.png' %}" height="20" width="20"></a>
+                            <a href="{% url 'delete_problem' i.id %}"  title="delete"> <img src="{% static 'Images/icons/delete.png' %}" height="20" width="20"></a>
+                        </td>
+                    </tr>
+                         
+                
+                {% endfor %}
+            </table>
+        {% endif %}
+        <!-- Computer Science and Engineering Club (CSEC) was initially established as International Competitive Programming Colligate (ICPC) Club. It operated under the supervision of the Computer Science and Engineering (CSE) Program and its main objective was to produce competitive students for the International Programming Contest that the club was named after. Thereafter, in the year 2010 the Computer Science and Engineering Club (CSEC) was formed with the recognition of the CSE program. But it was in 2011 the fundamental changes happened.  -->
+    </div>
+
+
+    <div class=" col-md-4 col-sm-10" style="margin-left: 5%;">
+        
+        <h3>add new problem</h3><br>
+        
+        <form enctype="multipart/form-data" method="post" novalidate>
+            {% csrf_token %}
+
+            <table class="table table-light" style="width:100%;">
+                {% for field in zip_form.visible_fields %}
+                    <tr>
+                        <td><strong>{{ zip_form.visible_fields.0.label_tag }}</strong>
+                        <td>
+                            {% if zip_form.is_bound %}
+                                {% if field.errors %}
+                                    {% render_field field class="form-control is-invalid" %}
+                                    {% for  error in field.errors %}
+                                        <div class="invalid-feedback">
+                                            {{ error }}
+                                        </div>
+                                    {% endfor %}
+
+                                {% else %}
+                                    {% render_field field class="form-control is-valid" %}
+                                {% endif %}
+                            {% else %}
+                                {% render_field field class="form-control" %}
+                            {% endif %}
+                                            
+
+                            {% if field.help_text %}
+                                <small class="form-text text-muted">{{ field.help_text }}</small>
+                            {% endif %}
+                        </td>
+                        <td><button type="submit" class = "btn btn-secondary" name="zip"  style="width: 100%;">save</button></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </form> 
+        <hr><br><br>
+
+
+
+
+
+        <form enctype="multipart/form-data" method="post" novalidate>
+            {% csrf_token %}
+            {% include 'horizontal_form.html' %}
+
+            <button type="submit" class = "btn btn-primary" name="row-data"> save</button>
+        </form>
+        
+    </div>
+</div>
+{% endblock %}
+
+   

@@ -1,0 +1,86 @@
+
+{% extends base_page %}
+{% block title%} Change Team {% endblock %}
+
+{% block content %}  
+    {% load static %} 
+    {% load widget_tweaks %}
+
+    
+    <div class = "container col-6" style="margin-left:10%;">
+        <br><br><br>
+        <form  enctype="multipart/form-data" method="post" novalidate action="{% url 'change_team' %}">
+            {% csrf_token %}
+            
+            <table class="table table-light" style="width:100%;">
+                <thead>
+                    <td></td>
+                    <td><strong>username</strong></td>
+                    <td><strong>role</strong></td>
+                    <td><strong>view</strong></td>
+
+                </thead>
+                {% if not active.team %}
+                    <tr style="background:rgb(28, 236, 226);" >
+                        <td>
+                            <input type="radio" name="active_team" value="0" checked> 
+                        </td>
+                        <td> 
+                            <label>{{request.user.username}}</label> 
+                        </td>
+                        <td> User </td>
+                        <td></td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td>
+                            <input type="radio" name="active_team" value="0"> 
+                        </td>
+                        <td> 
+                            <label>{{request.user.username}}</label> 
+                        </td>
+                        <td> <label>User</label> </td>
+                        <td></td>
+                    </tr>
+                {% endif %}
+                {% for i in team %}
+                `   {% if active.team == i %}
+                        <tr style="background: rgb(28, 236, 226);">
+                            <td>
+                                <input type="radio" name="active_team" value="{{i.id}}" checked> 
+                            </td>
+                            <td> 
+                                <label>{{i.username}}</label> 
+
+                            </td>
+                            <td> 
+                                <label>Team</label>
+                            </td>
+                            <td>  
+                                <a href="{% url 'view_team' i.id %}" float="right" style="margin-right:5%;" title="view" target="_blank"> <img src="{% static 'Images/icons/view_detail.png' %}" height="20" width="20"></a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td>
+                                <input type="radio" name="active_team" value="{{i.id}}" > 
+                            </td>
+                            <td> 
+                                <label>{{i.username}}</label>
+                                 
+                            </td>
+                            <td> 
+                                <label>Team</label>
+                            </td>
+                            <td>
+                                <a href="{% url 'view_team' i.id %}" float="right" style="margin-right:5%;" title="view" target="_blank"> <img src="{% static 'Images/icons/view_detail.png' %}" height="20" width="20"></a>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+            <button type="submit" class = "btn btn-primary" style="float:right;">save changes</button>
+        </form>
+        <br><br><br>
+    </div>
+{% endblock %}

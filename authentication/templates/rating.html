@@ -1,0 +1,140 @@
+{% extends base_page %}
+{% block title%} Rating{% endblock %}
+
+{% block content %}  
+    {% load static %} 
+    
+    <div class = "container col-5" style="margin-left:10%;">
+        {% if team %}
+            <br><br>
+            <table class="table table-striped">
+                <thead class="table-info">
+                    <tr >
+                        <th>Rank </th>
+                        <th>Team </th>
+                        <th>Rating </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for rank, row in team %}
+                        <tr>
+                            <td> {{rank}} </td>
+                            <td> {{row.username}} </td>
+                            <td> {{row.score}} </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+
+        {% if participant %}
+            <br><br>
+            <table class="table table-striped">
+                <thead class="table-info">
+                    <tr >
+                        <th>Rank </th>
+                        <th>Participant </th>
+                        <th>Rating </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for rank, row in participant %}
+                        <tr>
+                            <td> {{rank}} </td>
+                            <td> {{row.first_name}} {{row.last_name}} </td>
+                            <td> {{row.score}} </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+
+        {% if observer %}
+            <br><br>
+            <table class="table table-striped">
+                <thead class="table-info">
+                    <tr >
+                        <th>Rank </th>
+                        <th>Observer </th>
+                        <th>Rating </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for rank, row in observer %}
+                        <tr>
+                            <td> {{rank}} </td>
+                            <td> {{row.first_name}} {{row.last_name}} </td>
+                            <td> {{row.score}} </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+
+        {% if self_registered %}
+            <br><br>
+            <table class="table table-striped">
+                <thead class="table-info">
+                    <tr >
+                        <th>Rank </th>
+                        <th>Self Registered </th>
+                        <th>Rating </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for rank, row in self_registered %}
+                        <tr>
+                            <td> {{rank}} </td>
+                            <td> {{row.first_name}} {{row.last_name}} </td>
+                            <td> {{row.score}} </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+
+        {% if system %}
+            <br><br>
+            <table class="table table-striped">
+                <thead class="table-info">
+                    <tr >
+                        <th>Rank </th>
+                        <th>System</th>
+                        <th>Rating </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for rank, row in system %}
+                        <tr>
+                            <td> {{rank}} </td>
+                            <td> {{row.first_name}} {{row.last_name}} </td>
+                            <td> {{row.score}} </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+
+        {% if organization %}
+            <br><br>
+            <table class="table table-striped">
+                <thead class="table-info">
+                    <tr >
+                        <th>Rank </th>
+                        <th>Organization</th>
+                        <th>Rating </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for rank, row in organization %}
+                        <tr>
+                            <td> {{rank}} </td>
+                            <td> {{row.first_name}} {{row.last_name}} </td>
+                            <td> {{row.score}} </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+{% endblock %}

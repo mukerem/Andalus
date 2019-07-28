@@ -1,0 +1,73 @@
+[
+    {
+        "model": "authentication.Role",
+        "pk": 1,
+        "fields": {
+            "role": "Adminstrative User",
+           "short_name": "admin"
+        }
+    },
+    {
+        "model": "authentication.Role",
+        "pk": 2,
+        "fields": {
+            "role": "Team Member",
+           "short_name": "team"
+        }
+    },
+    {
+        "model": "authentication.Role",
+        "pk": 3,
+        "fields": {
+            "role": "Jury User",
+           "short_name": "jury"
+        }
+    },
+    {
+        "model": "authentication.Category",
+        "pk": 1,
+        "fields": {
+            "category": "System"
+        }
+    },
+    {
+        "model": "authentication.Category",
+        "pk": 2,
+        "fields": {
+            "category": "Participant"
+        }
+    },
+    {
+        "model": "authentication.Category",
+        "pk": 3,
+        "fields": {
+            "category": "Observer"
+        }
+    },
+    {
+       "model": "authentication.Category",
+        "pk": 4,
+        "fields": {
+            "category": "Self Registered"
+        }
+    },
+    {
+       "model": "authentication.Category",
+        "pk": 5,
+        "fields": {
+            "category": "Organization"
+        }
+    },
+    
+    {
+       "model": "authentication.Campus",
+        "pk": 1,
+        "fields": {
+            "name": "Adama Science and Technology University",
+            "short_name": "ASTU",
+            "logo": "astu.jpeg",
+            "country": "Ethiopia"
+        }
+    }
+    
+]

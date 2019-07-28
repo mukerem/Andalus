@@ -1,0 +1,41 @@
+{% extends base_page %}
+{% block title%}Clarification{% endblock %}
+
+{% load static %}
+{% block content %}
+
+<br><br>
+    <div class="col-md-6" style="margin-left:15%;">
+        {% if not all_clarification %}
+            <h3>There is no clarifications </h3>
+        {% else %}
+            {% for time, message, user, type, contest in all_clarification%}
+                {% if type == "for_all" or type == "to_user" or type == "to_team" %}
+                    <div class="col-sm-8" style="float:right;background: rgb(194, 241, 215); border-radius: 20px; margin-top: 15px; padding-top: 10px; padding-bottom: 5px;">
+                        <small><label><strong>Contest: {{contest}}</strong></label></small><br>
+                        <small><label><strong>{{user}}</strong></label></small>
+                        <p>
+                            {{message}}
+                        </p>
+                        <small style="float:right;">{{time}}</small>
+                    </div>
+                {% else %}
+                    <div class="col-sm-8"  style="float:left; background: rgb(189, 238, 166);border-radius: 20px; margin-top: 15px;  padding-top: 10px; padding-bottom: 5px;">
+                        <small><label><strong>Contest: {{contest}}</strong></label></small><br>
+                        <small><label><strong>{{user}}</strong></label></small>
+                        <p>
+                            {{message}}
+                        </p>
+                        <small style="float:right;">{{time}}</small>
+                    </div>
+                {% endif %}
+                
+            {% endfor %}
+        {% endif %}
+
+    </div>
+
+
+{% endblock %}
+
+   

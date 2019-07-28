@@ -1,0 +1,35 @@
+{% extends 'base_site.html'%}
+{% block title%}Problems{% endblock %}
+{% load static %}
+
+
+{% block content %}
+{% if not problem %}
+<div class="container nocontest">
+    <h3>There is no active contest</h3>
+</div>
+{% else %}
+<div class="content" id="active_contest_problem_" >
+    <div class="container">
+        <ul id="problem">
+        {% for pro in problem %}
+            <li> <a href="{{ pro.pdf.url }}" title="pdf" target="_blank"> Problem {{ pro.short_name }} : {{ pro.title }} </a></li>
+        {% endfor %}
+        </ul>
+    </div>
+</div>
+
+ 
+<script>
+    setInterval(function(){
+        $.ajax({ 
+            url:"{% url 'active_contest_problem_refresh' %}",
+            success: function(data){
+                $('#active_contest_problem').html(data);
+            }
+        }); 
+    }, 5000);
+
+</script>
+{% endif %}
+{% endblock %}

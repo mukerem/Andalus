@@ -1,0 +1,110 @@
+{% extends base_page %}
+{% block title%} profile{% endblock %}
+
+{% block content %}  
+    {% load static %} 
+    {% load widget_tweaks %}
+
+    
+    <div class = "container col-6" style="margin-left:10%;">
+        <br>
+        {% if not active_team %}
+            <form  enctype="multipart/form-data" method="post" novalidate>
+                {% csrf_token %}
+                {% if form.non_field_errors %}
+                    <table class="error">
+                        {% for error in form.non_field_errors%}
+                        <tr><td><b> {{ error}}</b></td></tr>
+                        {% endfor %}
+                    </table>
+                    <br>
+                {% endif %}
+                <table class="table table-light" style="width:100%;">
+                    {% for field in form.visible_fields %}
+                        <tr>
+                            <td>
+                                {% if field.field.required%}
+                                    <strong>{{ field.label_tag }}</strong>
+                                {% else %}
+                                    {{ field.label_tag }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if field.name == 'photo' %}
+                                    {% if request.user.photo %}
+                                        <br><img src="{{request.user.photo.url}}" height="150" width="200"><br><br>
+                                    {% endif %}
+                                {% endif %}
+                                {% if form.is_bound %}
+                                    {% if field.errors %}
+                                        {% render_field field class="form-control is-invalid" %}
+                                        {% for  error in field.errors %}
+                                            <div class="invalid-feedback">
+                                                {{ error }}
+                                            </div>
+                                        {% endfor %}
+
+                                    {% else %}
+                                        {% render_field field class="form-control is-valid" %}
+                                    {% endif %}
+                                {% else %}
+                                    {% render_field field class="form-control" %}
+                                {% endif %}
+                                                
+
+                                {% if field.help_text %}
+                                    <small class="form-text text-muted">{{ field.help_text }}</small>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    
+                    {% endfor %}
+                    </table>
+                        <button type="submit" class = "btn btn-primary"> save changes</button>
+                        <a class="butt" href="{% url 'change_password' %}" style="float:right;  margin-left: 10%;">change password</a>
+
+                        {% if team%}
+                            <a class = "btn btn-secondary" href="{% url 'change_team' %}" style="float:right;">change role</a>
+                        {% endif %}
+            </form>
+        {% else %}
+            <br><br><br>
+            <table class="table table-light" style="width:100%;">
+              
+                <tr>
+                    <td style="width:30%;"> <strong>Team Name:</strong></td>
+                    <td style="width:70%;">{{active_team.username}}</td>
+                </tr>
+                {% if active_team.campus %}
+                <tr>
+                    <td style="width:30%;"> <strong>Campus:</strong></td>
+                    <td style="width:70%;">{{active_team.campus}}</td>
+                </tr>
+                {% endif %}
+                <tr>
+                    <td style="width:30%;"> <strong>Score:</strong></td>
+                    <td style="width:70%;">{{active_team.score}}</td>
+                </tr>
+                <tr>
+                    <td style="width:30%;"> <strong>Register date:</strong></td>
+                    <td style="width:70%;">{{active_team.register_date}}</td>
+                </tr>
+                {% if active_team.member.all %}
+                    <tr style="background:rgb(161, 228, 224);">
+                        <td style="width:30%;"> <strong>Members:</strong></td>
+                        <td style="width:70%;">
+                            <table  style="width:100%;">
+                                {% for i in active_team.member.all %}
+                                    <tr><td>{{i.first_name}} {{i.last_name}}</td></tr>
+                                {% endfor %}
+                            </table>
+                        </td>
+                    </tr>
+                    
+                {% endif%}
+            </table>'
+            <a class = "btn btn-secondary" href="{% url 'change_team' %}" style="float:right;">change role</a>
+        {% endif %}
+        <br><br><br>
+    </div>
+{% endblock %}
