@@ -10,7 +10,7 @@ def loadfixture(app, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('competitive', '0002_auto_20190628_1950'),
+        ('competitive', '0002_auto_20190628_2223'),
     ]
 
     operations = [
