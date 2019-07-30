@@ -18,6 +18,8 @@ pip install -r requirements.txt
 First set the database engine (PostgreSQL, MySQL, etc..) in your settings files; 
 projectname/settings.py . Of course, remember to install necessary database driver for your engine. Then define your credentials as well. Time to finish it up:
 
+If you have not database engine or driver , use default database that is sqlite3. 
+comment mysql configration and uncomment sqlite3 in projectname/settings.py
 ```
 python/manage.py migrate
 ```
