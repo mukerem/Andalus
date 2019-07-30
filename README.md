@@ -72,9 +72,11 @@ projectname/settings.py . Of course, remember to install necessary database driv
 
 If you have not database engine or driver , use default database that is sqlite3. 
 comment mysql configration and uncomment sqlite3 in projectname/settings.py
+
 ```python/manage.py migrate```
 
 create super user it is super admin/database admin, simply type :
+
 ```python/manage.py createsuperuser```
 
 and create admin of the system from user table by selecting admin role in django admin site.
