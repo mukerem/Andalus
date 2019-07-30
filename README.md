@@ -5,6 +5,8 @@ Andalus is an automated judge system to run programming contests. It has a mecha
 
 
 ## Requirements
+#### install python3
+
 
 ### Creating Python Virtual Environment 
 A Virtual Environment is a python environment, that is an isolated working copy of Python which allows you to work on a specific project without affecting other projects
