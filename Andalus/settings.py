@@ -112,25 +112,25 @@ DATABASES = {
     #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     # }
 
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'NAME': 'andalus2',
-    #     'USER' : 'postgres',
-    #     'PASSWORD' : 'andalus',
-    #     'HOST' : '127.0.0.1',
-    #     'PORT' : '5432',
-    # }
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'andalus2',
+        'USER' : 'postgres',
+        'PASSWORD' : 'andalus',
+        'HOST' : '127.0.0.1',
+        'PORT' : '5432',
+    }
 
     
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'andalus',
-        'USER' : 'root',
-        'PASSWORD' : 'suladna',
-        'HOST' : '127.0.0.1',
-        'PORT' : '3306',
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': 'andalus',
+    #     'USER' : 'root',
+    #     'PASSWORD' : 'suladna',
+    #     'HOST' : '127.0.0.1',
+    #     'PORT' : '3306',
 
-    }
+    # }
 }
 
 
