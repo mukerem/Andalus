@@ -41,5 +41,5 @@ and create admin of the system from user table by selecting admin role in django
 ## Authors
 
 
-##### Mukerem Ali
-##### Mustefa Kamil
+* Mukerem Ali
+* Mustefa Kamil
