@@ -780,18 +780,26 @@ def scoreboard(request):
         elif scoreboard_in_session and scoreboard_in_session['last_update'] == last_update:
             scoreboard = scoreboard_in_session['score']
         else:
-            team_scoreboard = team_calculate_scoreboard_by_public(request, contest_id)
-            participant_scoreboard = user_calculate_scoreboard_by_public(request, contest_id, 'Participant')
-            observer_scoreboard = user_calculate_scoreboard_by_public(request, contest_id, 'Observer')
-            self_registered_scoreboard = user_calculate_scoreboard_by_public(request, contest_id, 'Self Registered')
-            
             if request.user.category.category == "System":
+                team_scoreboard = team_calculate_scoreboard_by_public(request, contest_id)
                 system_scoreboard = user_calculate_scoreboard_by_public(request, contest_id, 'System')
                 organization_scoreboard = user_calculate_scoreboard_by_public(request, contest_id, 'Organization')
+                participant_scoreboard = user_calculate_scoreboard_by_public(request, contest_id, 'Participant')
+                observer_scoreboard = user_calculate_scoreboard_by_public(request, contest_id, 'Observer')
+                self_registered_scoreboard = user_calculate_scoreboard_by_public(request, contest_id, 'Self Registered')
+                
             elif request.user.category.category == "Organization":
+                team_scoreboard = team_calculate_scoreboard_by_public(request, contest_id)
+                self_registered_scoreboard = user_calculate_scoreboard_by_public(request, contest_id, 'Self Registered')
                 organization_scoreboard = user_calculate_scoreboard_by_public(request, contest_id, 'Organization')
+                participant_scoreboard = user_calculate_scoreboard_by_public(request, contest_id, 'Participant')
+                observer_scoreboard = user_calculate_scoreboard_by_public(request, contest_id, 'Observer')
                 system_scoreboard = []
             else:
+                team_scoreboard = team_calculate_scoreboard_by_public(request, contest_id)
+                participant_scoreboard = user_calculate_scoreboard_by_public(request, contest_id, 'Participant')
+                observer_scoreboard = user_calculate_scoreboard_by_public(request, contest_id, 'Observer')
+                self_registered_scoreboard = user_calculate_scoreboard_by_public(request, contest_id, 'Self Registered')
                 system_scoreboard = organization_scoreboard = []
             scoreboard = {
                 'team_scoreboard': team_scoreboard, 
@@ -836,18 +844,26 @@ def scoreboard_refresh(request):
         elif scoreboard_in_session and scoreboard_in_session['last_update'] == last_update:
             scoreboard = scoreboard_in_session['score']
         else:
-            team_scoreboard = team_calculate_scoreboard_by_public(request, contest_id)
-            participant_scoreboard = user_calculate_scoreboard_by_public(request, contest_id, 'Participant')
-            observer_scoreboard = user_calculate_scoreboard_by_public(request, contest_id, 'Observer')
-            self_registered_scoreboard = user_calculate_scoreboard_by_public(request, contest_id, 'Self Registered')
-            
             if request.user.category.category == "System":
+                team_scoreboard = team_calculate_scoreboard_by_public(request, contest_id)
                 system_scoreboard = user_calculate_scoreboard_by_public(request, contest_id, 'System')
                 organization_scoreboard = user_calculate_scoreboard_by_public(request, contest_id, 'Organization')
+                participant_scoreboard = user_calculate_scoreboard_by_public(request, contest_id, 'Participant')
+                observer_scoreboard = user_calculate_scoreboard_by_public(request, contest_id, 'Observer')
+                self_registered_scoreboard = user_calculate_scoreboard_by_public(request, contest_id, 'Self Registered')
+                
             elif request.user.category.category == "Organization":
+                team_scoreboard = team_calculate_scoreboard_by_public(request, contest_id)
+                self_registered_scoreboard = user_calculate_scoreboard_by_public(request, contest_id, 'Self Registered')
                 organization_scoreboard = user_calculate_scoreboard_by_public(request, contest_id, 'Organization')
+                participant_scoreboard = user_calculate_scoreboard_by_public(request, contest_id, 'Participant')
+                observer_scoreboard = user_calculate_scoreboard_by_public(request, contest_id, 'Observer')
                 system_scoreboard = []
             else:
+                team_scoreboard = team_calculate_scoreboard_by_public(request, contest_id)
+                participant_scoreboard = user_calculate_scoreboard_by_public(request, contest_id, 'Participant')
+                observer_scoreboard = user_calculate_scoreboard_by_public(request, contest_id, 'Observer')
+                self_registered_scoreboard = user_calculate_scoreboard_by_public(request, contest_id, 'Self Registered')
                 system_scoreboard = organization_scoreboard = []
             scoreboard = {
                 'team_scoreboard': team_scoreboard, 
@@ -893,11 +909,10 @@ def public_scoreboard(request):
             scoreboard = scoreboard_in_session['score']
         else:
             team_scoreboard = team_calculate_scoreboard_by_public(request, contest_id)
-            organization_scoreboard = user_calculate_scoreboard_by_public(request, contest_id, 'Organization')
             participant_scoreboard = user_calculate_scoreboard_by_public(request, contest_id, 'Participant')
             observer_scoreboard = user_calculate_scoreboard_by_public(request, contest_id, 'Observer')
             self_registered_scoreboard = user_calculate_scoreboard_by_public(request, contest_id, 'Self Registered')
-            system_scoreboard = []
+            system_scoreboard = organization_scoreboard = []
             scoreboard = {
                 'team_scoreboard': team_scoreboard, 
                 'participant_scoreboard': participant_scoreboard, 
@@ -918,21 +933,8 @@ def public_scoreboard_refresh(request):
     refresh_active_contest_public(request) # refersh the contest session
     now = timezone.now()
     contest_id = request.session.get('public_contest_741_852_963')
-    frozen = None
     if contest_id:
         current_contest = Contest.objects.get(pk=contest_id)
-        unfrozen_time = current_contest.unfrozen_time
-        if not unfrozen_time: unfrozen_time = current_contest.end_time
-        if current_contest.last_update < unfrozen_time and now >= unfrozen_time:
-            current_contest.last_update = unfrozen_time
-            current_contest.save()
-        if current_contest.last_update < current_contest.start_time and now >= current_contest.start_time:
-            current_contest.last_update = current_contest.start_time
-            current_contest.save()
-        if current_contest.frozen_time and now >= current_contest.frozen_time and now < unfrozen_time:
-            frozen = (current_contest.frozen_time, unfrozen_time)
-        else:
-            frozen = None
         total_problems = current_contest.problem.all().order_by('short_name')
         last_update = str(current_contest.last_update)
         scoreboard_in_session = request.session.get('public_scoreboard_contest_id_'+ str(contest_id))
@@ -945,8 +947,7 @@ def public_scoreboard_refresh(request):
             participant_scoreboard = user_calculate_scoreboard_by_public(request, contest_id, 'Participant')
             observer_scoreboard = user_calculate_scoreboard_by_public(request, contest_id, 'Observer')
             self_registered_scoreboard = user_calculate_scoreboard_by_public(request, contest_id, 'Self Registered')
-            organization_scoreboard = user_calculate_scoreboard_by_public(request, contest_id, 'Organization')
-            system_scoreboard = []
+            system_scoreboard = organization_scoreboard = []
             scoreboard = {
                 'team_scoreboard': team_scoreboard, 
                 'participant_scoreboard': participant_scoreboard, 
@@ -1080,9 +1081,6 @@ def submission_filter(request):
             all_submissions = Submit.objects.filter(contest_id=contest_id, problem_id=problem_id).order_by('submit_time').reverse()
     if type_filter == 'rejudge':
         return render(request, 'rejudge_filter.html', {'submit': all_submissions})
-    elif type_filter == 'rescore':
-        return render(request, 'rescore_filter.html', {'submit': all_submissions})
-   
     return render(request, 'submission_filter.html', {'submit': all_submissions})
 
 
@@ -1484,42 +1482,4 @@ def all_rejudge(request):
         pro = (i.problem.id, i.problem.title)
         all_problems.add(pro)
     return render(request, 'rejudge.html', {'submit': all_submissions, 'all_contests': all_contests, 'all_problems': all_problems})
-
-
-@login_required
-@admin_auth
-def ajax_rescore(request):
-    refresh_active_contest_in_admin(request) # refersh the contest session
-    total_submits = request.GET.getlist('total_submit[]')  
-    rescore_submits = [int(i) for i in total_submits]
-    result_dict = {}
-    print(rescore_submits)
-    for submit_id in rescore_submits:
-        try:  
-            submit = Submit.objects.get(pk=submit_id)
-        except Submit.DoesNotExist:
-            raise PermissionDenied
-        prevous_submit_result = submit.result
-        update_score_and_rank(submit, prevous_submit_result, prevous_submit_result)
-        current_contest = submit.contest
-        current_contest.last_update = timezone.now()
-        current_contest.save()
-        if current_contest.has_value:
-            rejudge_give_score(submit, prevous_submit_result)        
-    response_data = {}
-    return JsonResponse(response_data, content_type="application/json")
-
-
-@login_required
-@admin_auth
-def re_score(request):
-    now = timezone.now()
-    refresh_active_contest_in_admin(request) # refersh the contest session
-    all_contests = Contest.objects.filter(active_time__lte=now, deactivate_time__gte=now, enable=True)
-    all_submissions = Submit.objects.filter(contest__active_time__lte=now, contest__deactivate_time__gte=now, contest__enable=True).order_by('submit_time').reverse()
-    all_problems = set()
-    for i in all_submissions:
-        pro = (i.problem.id, i.problem.title)
-        all_problems.add(pro)
-    return render(request, 're_score.html', {'submit': all_submissions, 'all_contests': all_contests, 'all_problems': all_problems})
 
