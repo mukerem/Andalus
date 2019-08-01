@@ -114,7 +114,7 @@ DATABASES = {
 
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'andalus2',
+        'NAME': 'andalus',
         'USER' : 'postgres',
         'PASSWORD' : 'andalus',
         'HOST' : '127.0.0.1',
