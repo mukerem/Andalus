@@ -134,7 +134,7 @@ def all_time_clarifications(request):
     all_clarification.sort(reverse=True)
         
     role = check_role(request)
-    if role == 'admin':
+    if role == 'Admin':
         base_page = "admin_base_site.html"
     else:
         base_page = "jury_base.html"
