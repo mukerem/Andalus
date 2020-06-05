@@ -1,5 +1,5 @@
 Babel==2.6.0
-Django==2.0.7
+Django==2.2.13
 django-collectionfield==0.0.4
 django-datetime-widget==0.9.3
 django-datetimepicker==3.14
