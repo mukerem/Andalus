@@ -9,7 +9,7 @@ Andalus is an automated judge system to run programming contests. It has a mecha
 
 
 #### Creating Python Virtual Environment 
-### install depenedcies
+### Install dependencies:
 Right there, you will find the requirements.txt file that has all the great debugging tools, django helpers and some other cool stuff. To install them, simply type:
 
 ```pip install -r requirements.txt```
