@@ -7,8 +7,10 @@ Andalus is an automated judge system to run programming contests. It has a mecha
 ## Requirements
 #### install python3
 
-
 #### Creating Python Virtual Environment 
+
+### Recommended IDE - Vidual Studio Code (An open Source IDE from Microsoft)
+
 ### install depenedcies
 Right there, you will find the requirements.txt file that has all the great debugging tools, django helpers and some other cool stuff. To install them, simply type:
 
